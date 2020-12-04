@@ -1,3 +1,9 @@
+# Credentials folder for Google Firebase
+/credentials
+
+# Environment variables
+.env
+
 # Logs
 logs
 *.log
