@@ -8,7 +8,7 @@ let justSignedUp = false;
 // MongoDB variables and connection
 let url = "mongodb://localhost:27017/data";
 let User = require('./models/users.js');
-mongoose.connect(url, {useNewUrlParser: true}, function(err, client) {
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
     if (err) {
         console.log("Could not connect to DB");
     } else {
