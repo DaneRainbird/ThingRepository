@@ -7,6 +7,9 @@
         <a href='/login<%= activeRoute %>'>Login</a>
         <a href='/logout<%= activeRoute %>'>Logout</a>
         <a href='/sign-up<%= activeRoute %>'>Sign Up!</a>
-        <%= isAuthenticated %>
+        <br />
+        <% if (isAuthenticated) { %>
+            <p>You are signed in as <%=user%></p>
+        <% } %>
     </body>
 </html>
