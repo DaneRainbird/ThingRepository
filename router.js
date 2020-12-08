@@ -88,8 +88,8 @@ router.get('/profile', (req, res) => {
     res.render("profile.html", {user: username});
 });
 
-router.get('/rocks', requiresAuth(), (req, res) => {
-    res.render("rocks.html");
+router.get('/things', requiresAuth(), (req, res) => {
+    res.render("things.html");
 });
 
 module.exports = router;
