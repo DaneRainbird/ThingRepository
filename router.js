@@ -1,13 +1,16 @@
 var express = require('express');
 const { requiresAuth } = require('express-openid-connect');
 let mongoose = require('mongoose');
+let imgur = require('imgur');
+let base64 = require('image-to-base64');
 var router = express.Router();
+
+imgur.setAPIUrl('https://api.imgur.com/3/');
+
 
 // MongoDB variables and connection
 let url = "mongodb://localhost:27017/data";
 let Thing = require('./models/things.js');
-const { exit } = require('process');
-const { ObjectID, ObjectId } = require('bson');
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
     if (err) {
@@ -73,6 +76,32 @@ router.get('/things', requiresAuth(), (req, res) => {
         if (err) throw err;
         res.render("things.html", {data: things});
     });
+});
+
+router.post('/addThing', requiresAuth(), async (req, res) => {
+    let imgBase64 = req.body.imageB64;
+    let imgUrl = "";
+    
+    await imgur.uploadBase64(imgBase64).then(function (json) {
+        imgUrl = json.data.link
+        console.log("URL is " + imgUrl);
+    }).catch(function (err) {
+        console.error(err.message);
+    });
+
+    let newThing = Thing({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        date: req.body.date,
+        imageUrl: imgUrl,
+        user: res.locals.userId
+    });
+    newThing.save((err) => {
+        if (err) throw err;
+    });
+    res.redirect('/things?success=true');
 });
 
 module.exports = router;

@@ -29,6 +29,10 @@ let thingSchema = mongoose.Schema({
         type: String,
         required: false
     },
+    date: {
+        type: Date,
+        required: true
+    },
     user: {
         type: String,
         ref: 'Users'

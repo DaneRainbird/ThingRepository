@@ -47,6 +47,20 @@ html, body {
     margin-bottom: 10px;
 }
 
+#waitText {
+    display: none;
+    justify-content: center;
+}
+
+.loading-body {
+    display: flex;
+    justify-content: center;
+}
+
+header {
+    margin-bottom: 15px;
+}
+
 /* Fixes for broken stuff(?) in BS4.5 */
 .navbar {
     padding: .5rem 1rem !important;

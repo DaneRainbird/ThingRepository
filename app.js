@@ -12,7 +12,7 @@ dotEnv.config();
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-app.use(bodyParser.urlencoded({extended: false})) 
+app.use(bodyParser.urlencoded({extended: false, limit: '20mb'})) 
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use('/popperjs', express.static(__dirname + '/node_modules/@popperjs/core/dist'))
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'))
