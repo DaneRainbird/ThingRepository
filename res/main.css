@@ -42,6 +42,11 @@ html, body {
     transform: translateY(1.5px);
 }
 
+.modal-input > input, .modal-input > textarea, .modal-input > button {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 /* Fixes for broken stuff(?) in BS4.5 */
 .navbar {
     padding: .5rem 1rem !important;

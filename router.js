@@ -23,6 +23,7 @@ router.use((req, res, next) => {
     res.locals.isAuthenticated = req.oidc.isAuthenticated();
     res.locals.activeRoute = req.originalUrl;
     res.locals.user = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
+    res.locals.userId = req.oidc.isAuthenticated() ? req.oidc.user.sub : '';
     next(); 
 });
 
@@ -63,6 +64,7 @@ router.get('/', (req, res) => {
 
 router.get('/profile', (req, res) => {
     user = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
+    userId = req.oidc.isAuthenticated() ? req.oidc.user.sub : '';
     res.render("profile.html");
 });
 
