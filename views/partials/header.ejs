@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">ThingRepository</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
+    <div class="collapse navbar-collapse justify-content-between" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <% if (isAuthenticated) { %>
                 <li class="nav-item">
@@ -12,27 +12,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/things">Your Things</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout<%= activeRoute %>">Log Out</a>
-                </li>
-            <% } else { %> 
-                <li class="nav-item">
-                    <a class="nav-link" href="/login<%= activeRoute %>">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/sign-up<%= activeRoute %>">Sign Up!</a>
-                </li>
             <% } %>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <span class="navbar-text">
-                Right aligned
-            </span>
+            <li class="nav-item dropdown">
+            <% if (isAuthenticated) { %>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <%= user %>
+                </a>
+                <div class="dropdown-menu menu-right-fix" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/profile">Your Profile</a>
+                    <a class="dropdown-item" href="/logout<%= activeRoute %>">Log Out</a>
+                </div>
+            <% } else { %>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                </a>
+                <div class="dropdown-menu menu-right-fix" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/login<%= activeRoute %>">Log In</a>
+                    <a class="dropdown-item" href="/sign-up<%= activeRoute %>">Sign Up!</a>
+                </div>
+            <% } %>
         </ul>
-        <% if (isAuthenticated) { %>
-            <span class="navbar-text">
-                You are signed in as <%= user %>
-            </span>
-        <% } %>
     </div>
   </nav>

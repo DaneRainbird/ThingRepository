@@ -13,7 +13,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.use(bodyParser.urlencoded({extended: false})) 
-app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use(express.static('res'));
 
 // Setup Auth0 authentication

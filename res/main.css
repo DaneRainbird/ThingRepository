@@ -7,6 +7,12 @@ html, body {
     width: 75%;
 }
 
+/* Fixes for broken stuff(?) in BS4.5 */
 .navbar {
     padding: .5rem 1rem !important;
+}
+
+.menu-right-fix {
+    right: 0;
+    left: auto !important;
 }

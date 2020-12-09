@@ -3,8 +3,6 @@ const { requiresAuth } = require('express-openid-connect');
 let mongoose = require('mongoose');
 var router = express.Router();
 
-let justSignedUp = false;
-
 // MongoDB variables and connection
 let url = "mongodb://localhost:27017/data";
 let Thing = require('./models/things.js');
@@ -24,6 +22,7 @@ mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, functio
 router.use((req, res, next) => {
     res.locals.isAuthenticated = req.oidc.isAuthenticated();
     res.locals.activeRoute = req.originalUrl;
+    res.locals.user = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
     next(); 
 });
 
@@ -63,8 +62,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/profile', (req, res) => {
-    let username = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
-    res.render("profile.html", {user: username});
+    user = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
+    res.render("profile.html");
 });
 
 router.get('/things', requiresAuth(), (req, res) => {
