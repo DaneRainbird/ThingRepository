@@ -3,8 +3,13 @@ html, body {
     padding: 0px;
 }
 
-.row {
-    width: 75%;
+.thing-table {
+    display: flex;
+    justify-content: center;
+}
+
+.thing-table-child {
+    width: 85vw;
 }
 
 /* Fixes for broken stuff(?) in BS4.5 */

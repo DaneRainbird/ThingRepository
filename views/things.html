@@ -8,33 +8,37 @@
         <header>
             <%- include('./partials/header'); %>
         </header>
-        <div class="tes">
-            <table class="table table-striped table-hover">
-                <thead class="thead-dark">
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Image</th>
-                </thead>
-                <tbody>
-                    <% for (var i = 0; i < data.length; i++){ %>
-                        <tr>
-                            <td>
-                                <%= data[i].name %>
-                            </td>
-                            <td>
-                                <%= data[i].description %>
-                            </td>
-                            <td>
-                                <%= data[i].price %>
-                            </td>
-                            <td>
-                                <%= data[i].imageUrl %>
-                            </td>
-                        </tr>
-                    <% }%>
-                </tbody>
-            </table>
+        <br />
+        <br />
+        <div class="thing-table">
+            <div class="thing-table-child">
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Image</th>
+                    </thead>
+                    <tbody>
+                        <% for (var i = 0; i < data.length; i++){ %>
+                            <tr>
+                                <td>
+                                    <%= data[i].name %>
+                               </td>
+                                <td>
+                                    <%= data[i].description %>
+                                </td>
+                                <td>
+                                    <%= data[i].price %>
+                                </td>
+                                <td>
+                                    <%= data[i].imageUrl %>
+                                </td>
+                            </tr>
+                        <% }%>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <footer>
             <%- include('./partials/footer'); %>
