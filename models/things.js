@@ -28,6 +28,10 @@ let thingSchema = mongoose.Schema({
     imageUrl: {
         type: String,
         required: false
+    },
+    user: {
+        type: String,
+        ref: 'Users'
     }
 });
 

@@ -2,14 +2,19 @@
 <html>
     <head>
         <title>RockRepository | Profile</title>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
     </head>
+    <header>
+        <%- include('./partials/header'); %>
+    </header>
     <body>
-        <a href='/login<%= activeRoute %>'>Login</a>
-        <a href='/logout<%= activeRoute %>'>Logout</a>
-        <a href='/sign-up<%= activeRoute %>'>Sign Up!</a>
         <br />
         <% if (isAuthenticated) { %>
             <p>You are signed in as <%=user%></p>
         <% } %>
     </body>
+    <footer>
+        <%- include('./partials/footer'); %>
+    </footer>
 </html>

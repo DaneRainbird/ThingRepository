@@ -1,0 +1,12 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.row {
+    width: 75%;
+}
+
+.navbar {
+    padding: .5rem 1rem !important;
+}

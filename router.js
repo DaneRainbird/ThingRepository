@@ -7,32 +7,18 @@ let justSignedUp = false;
 
 // MongoDB variables and connection
 let url = "mongodb://localhost:27017/data";
-let User = require('./models/users.js');
+let Thing = require('./models/things.js');
+const { exit } = require('process');
+const { ObjectID, ObjectId } = require('bson');
+
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
     if (err) {
         console.log("Could not connect to DB");
+        throw err; 
     } else {
         console.log("Connected to DB at " + url);
     }
 });
-
-// Helper Functions
-let createUserInDb = function(userEmail) {
-    User.findOne({email: userEmail }, function (err, user) {
-        if (err) throw err;
-        if (!user) {
-            let newUser = new User({
-                _id: new mongoose.Types.ObjectId(),
-                email: userEmail
-            })
-            newUser.save(function(err) {
-                if (err) throw err;
-            });
-        } else {
-            console.log("user already exists.");
-        }
-    });
-}
 
 // Locals used in multiple pages
 router.use((req, res, next) => {
@@ -59,7 +45,6 @@ router.get('/sign-up/:page', (req, res) => {
             screen_hint: "signup",
         },
     });
-    justSignedUp = true;
 });
 
 router.get('/logout/:page', (req, res) => {
@@ -78,18 +63,15 @@ router.get('/', (req, res) => {
 });
 
 router.get('/profile', (req, res) => {
-    if (justSignedUp) {
-        // Create a user on sign up
-        createUserInDb(req.oidc.user.name);
-        justSignedUp = false;
-    }
-
     let username = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
     res.render("profile.html", {user: username});
 });
 
 router.get('/things', requiresAuth(), (req, res) => {
-    res.render("things.html");
+    Thing.find({user: req.oidc.user.sub}).populate('Users').exec(function(err, things) {
+        if (err) throw err;
+        res.render("things.html", {data: things});
+    });
 });
 
 module.exports = router;
