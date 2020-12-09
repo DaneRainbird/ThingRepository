@@ -12,6 +12,36 @@ html, body {
     width: 85vw;
 }
 
+.float {
+	position: fixed;
+	width: 60px;
+	height: 60px;
+	bottom: 40px;
+	right: 40px;
+	background-color: red;
+	color: white;
+	border-radius: 50px;
+	box-shadow: 2px 2px 3px #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 35px;
+}
+
+.float > .text {
+    height: 100%
+}
+
+.float:hover {
+    text-decoration: none !important;
+    color: white;
+}
+
+.float:active {
+    transform: translateY(1.5px);
+}
+
 /* Fixes for broken stuff(?) in BS4.5 */
 .navbar {
     padding: .5rem 1rem !important;
