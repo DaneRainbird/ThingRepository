@@ -61,6 +61,10 @@ header {
     margin-bottom: 15px;
 }
 
+.table tr {
+    cursor: pointer;
+}
+
 /* Fixes for broken stuff(?) in BS4.5 */
 .navbar {
     padding: .5rem 1rem !important;

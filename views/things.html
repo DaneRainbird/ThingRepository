@@ -19,8 +19,8 @@
                         <th scope="col">Date Purchased</th>
                     </thead>
                     <tbody>
-                        <% for (var i = 0; i < data.length; i++){ %>
-                            <tr>
+                        <% for (var i = 0; i < data.length; i++) { %>
+                            <tr href="#" data-toggle="modal" data-target="#item<%= data[i]._id %>Modal">
                                 <td>
                                     <% if (data[i].imageUrl != "") { %>
                                         <img width="100px" height="100px" src="<%= data[i].imageUrl %>" />
@@ -51,6 +51,12 @@
             <div class="text">+</div>
         </a>
         <%- include('./partials/addItemModal'); %>
+
+        <!-- Modals for clicking on each item in the list -->
+        <% for (var i = 0; i < data.length; i++){ %>
+            <%- include('./partials/existingItemModal', {data: data[i]}); %>
+        <% } %>
+
         <footer>
             <%- include('./partials/footer'); %>
         </footer>
