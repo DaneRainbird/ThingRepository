@@ -12,6 +12,8 @@
         <br />
         <% if (isAuthenticated) { %>
             <p>You are signed in as <%=user%></p>
+        <% } else { %>
+            <%- include('./partials/about'); %>
         <% } %>
         <footer>
             <%- include('./partials/footer'); %>

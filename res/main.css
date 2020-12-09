@@ -16,3 +16,7 @@ html, body {
     right: 0;
     left: auto !important;
 }
+
+.jumbotron {
+    margin: 25px !important;
+}
