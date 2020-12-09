@@ -14,6 +14,8 @@ app.set('view engine', 'html');
 
 app.use(bodyParser.urlencoded({extended: false})) 
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
+app.use('/popperjs', express.static(__dirname + '/node_modules/@popperjs/core/dist'))
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use(express.static('res'));
 
 // Setup Auth0 authentication
