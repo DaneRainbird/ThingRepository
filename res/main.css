@@ -65,6 +65,12 @@ header {
     cursor: pointer;
 }
 
+.center-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Fixes for broken stuff(?) in BS4.5 */
 .navbar {
     padding: .5rem 1rem !important;
