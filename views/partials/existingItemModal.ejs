@@ -23,7 +23,11 @@
                 <br />
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" data-toggle="collapse" data-target="#delete-menu, #delete-start" id="delete-start" class="btn btn-danger collapse show">Delete?</button>
+                <div class="collapse" id="delete-menu">
+                    <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#delete-menu, #delete-start">Go back</button>
+                    <button type="button" class="btn btn-danger">Actually Delete</button>
+                </div>
             </div>
         </div>
     </div>
