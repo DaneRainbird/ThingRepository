@@ -18,6 +18,15 @@ app.use('/popperjs', express.static(__dirname + '/node_modules/@popperjs/core/di
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use(express.static('res'));
 
+// Custom error handler
+app.use((error, req, res, next) => {
+    res.status(error.status);
+    res.json({
+        status: error.status,
+        message: error.message
+    });
+})
+
 // Setup Auth0 authentication
 const config = {
     authRequired: false,

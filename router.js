@@ -2,7 +2,7 @@ var express = require('express');
 const { requiresAuth } = require('express-openid-connect');
 let mongoose = require('mongoose');
 let imgur = require('imgur');
-let base64 = require('image-to-base64');
+let createError = require('http-errors');
 var router = express.Router();
 
 imgur.setAPIUrl('https://api.imgur.com/3/');
@@ -11,6 +11,7 @@ imgur.setAPIUrl('https://api.imgur.com/3/');
 // MongoDB variables and connection
 let url = "mongodb://localhost:27017/data";
 let Thing = require('./models/things.js');
+const { create } = require('./models/things.js');
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
     if (err) {
@@ -78,16 +79,16 @@ router.get('/things', requiresAuth(), (req, res) => {
     });
 });
 
-router.post('/addThing', requiresAuth(), async (req, res) => {
+router.post('/addThing', requiresAuth(), async (req, res, next) => {
     let imgBase64 = req.body.imageB64;
     let imgUrl = "";
     
-    await imgur.uploadBase64(imgBase64).then(function (json) {
-        imgUrl = json.data.link
-        console.log("URL is " + imgUrl);
-    }).catch(function (err) {
-        console.error(err.message);
-    });
+    if (imgBase64 != undefined || imgBase64 != "" || imgBase64 != null) {
+        await imgur.uploadBase64(imgBase64).then(function (json) {
+            imgUrl = json.data.link
+            console.log("URL is " + imgUrl);
+        }).catch(next);
+    }
 
     let newThing = Thing({
         _id: new mongoose.Types.ObjectId(),
@@ -99,9 +100,17 @@ router.post('/addThing', requiresAuth(), async (req, res) => {
         user: res.locals.userId
     });
     newThing.save((err) => {
-        if (err) throw err;
+        if (err) createError(400, 'An error occurred adding to the database.');
     });
-    res.redirect('/things?success=true');
+
+    res.redirect('/things');
+});
+
+router.delete('/deleteThing', requiresAuth(), (req, res) => {
+    Thing.findByIdAndDelete(req.body.id).exec((err, data) => {
+        if (err) res.json(err);
+        res.redirect('/things');
+    });
 });
 
 module.exports = router;

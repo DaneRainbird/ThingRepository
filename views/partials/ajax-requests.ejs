@@ -1,0 +1,18 @@
+<script>
+    // Create item form request
+    $('#thingForm').submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+           type: "POST",
+           url: "/addThing",
+           data: $(thingForm).serialize(),
+           success: function(result, statusCode, xhr) {
+               location.reload();
+           },
+           error: function(result, statusCode, xhr) {
+               console.log("Failed with error " + result.status);
+               $('#addItemModel').modal('hide');
+           },
+        });
+    }); 
+</script>
