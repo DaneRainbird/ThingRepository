@@ -18,15 +18,6 @@ app.use('/popperjs', express.static(__dirname + '/node_modules/@popperjs/core/di
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use(express.static('res'));
 
-// Custom error handler
-app.use((error, req, res, next) => {
-    res.status(error.status);
-    res.json({
-        status: error.status,
-        message: error.message
-    });
-})
-
 // Setup Auth0 authentication
 const config = {
     authRequired: false,
@@ -43,6 +34,17 @@ app.use(auth(config));
 // Setup router for endpoints
 var router = require("./router.js");
 app.use('/', router);
+
+// Custom error handler
+app.use((error, req, res, next) => {
+    console.log("Error handler fired... " + error.message)
+    res.status(error.status || 500);
+    res.json({
+        status: error.status,
+        message: error.message
+    });
+    res.end();
+})
 
 // Run the server 
 app.listen(process.env.PORT, () => console.log("Server running at port " + process.env.PORT));
