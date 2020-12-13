@@ -1,5 +1,5 @@
 <script>
-    // Create item form request
+    // Create item (form) request
     $('#thingForm').submit(function(event) {
         event.preventDefault();
         $.ajax({
@@ -12,7 +12,28 @@
            error: function(result, statusCode, xhr) {
                console.log("Failed with error " + result.status);
                $('#addItemModel').modal('hide');
+               $('.alert').show();
            },
         });
     }); 
+
+    // Delete item request
+    $(document).on('click', '#delete-button', function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: "DELETE",
+            url: "/deleteThing",
+            data: {
+                id: $(this).val()  
+            },
+            success: function(result, statusCode, xhr) {
+                location.reload();
+            },
+            error: function(result, statusCode, xhr) {
+                console.log("Failed with error " + result.status);
+                $('#addItemModel').modal('hide');
+                $('.alert').show();
+            }
+        });
+    });
 </script>

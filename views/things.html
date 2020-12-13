@@ -8,6 +8,12 @@
         <header>
             <%- include('./partials/header'); %>
         </header>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+            <strong>Error!</strong> Unable to add the thing.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         <div class="thing-table">
             <div class="thing-table-child">
                 <table class="table table-striped table-hover">
@@ -60,8 +66,9 @@
         <footer>
             <%- include('./partials/footer'); %>
         </footer>
+        <!-- Script Loading -->
         <%- include('./partials/scripts'); %>
+        <!-- AJAX Requests -->
+        <%- include('./partials/ajax-requests'); %>
     </body>
-    <!-- AJAX Requests -->
-    <%- include('./partials/ajax-requests'); %>
 </html>

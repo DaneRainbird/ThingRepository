@@ -84,11 +84,15 @@ router.post('/addThing', requiresAuth(), async (req, res, next) => {
     let imgUrl = "";
     
     if (imgBase64 != undefined || imgBase64 != "" || imgBase64 != null) {
+        console.log("Attempting to upload to imgur.")
         await imgur.uploadBase64(imgBase64).then(function (json) {
             imgUrl = json.data.link
             console.log("URL is " + imgUrl);
-        }).catch(next);
-    }
+        }).catch(err => {
+            next(err);
+            return; // prevent continued execution
+        });
+    };
 
     let newThing = Thing({
         _id: new mongoose.Types.ObjectId(),
@@ -106,11 +110,14 @@ router.post('/addThing', requiresAuth(), async (req, res, next) => {
     res.redirect('/things');
 });
 
-router.delete('/deleteThing', requiresAuth(), (req, res) => {
-    Thing.findByIdAndDelete(req.body.id).exec((err, data) => {
-        if (err) res.json(err);
-        res.redirect('/things');
+router.delete('/deleteThing', requiresAuth(), (req, res, next) => {
+    Thing.deleteOne({_id: new mongoose.Types.ObjectId(req.body.id)}).exec((err) => {
+        if (err) {
+            console.log(error);
+            next(err);
+        }
     });
+    res.status(200).send();
 });
 
 module.exports = router;
