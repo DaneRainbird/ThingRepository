@@ -1,5 +1,5 @@
-var express = require('express');
-const { requiresAuth } = require('express-openid-connect');
+let express = require('express');
+let { requiresAuth } = require('express-openid-connect');
 let mongoose = require('mongoose');
 let imgur = require('imgur');
 let createError = require('http-errors');
@@ -7,11 +7,9 @@ var router = express.Router();
 
 imgur.setAPIUrl('https://api.imgur.com/3/');
 
-
 // MongoDB variables and connection
 let url = "mongodb://localhost:27017/data";
 let Thing = require('./models/things.js');
-const { create } = require('./models/things.js');
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
     if (err) {

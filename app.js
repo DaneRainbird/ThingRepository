@@ -2,8 +2,8 @@
 let express = require("express");
 let bodyParser = require("body-parser"); 
 let dotEnv = require("dotenv");
-const { auth } = require('express-openid-connect');
-const { requiresAuth } = require('express-openid-connect');
+let { auth } = require('express-openid-connect');
+let { requiresAuth } = require('express-openid-connect');
 let app = express();
 
 // Configure imports
