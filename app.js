@@ -23,9 +23,9 @@ const config = {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.SESSSECRET,
-    baseURL: 'http://localhost:8080',
-    clientID: '7ENARlurk445mBHNTHxPtbH9dDk7AHSp',
-    issuerBaseURL: 'https://dev-4fzaj737.au.auth0.com'
+    baseURL: process.env.AUTH_BASE_URL,
+    clientID: process.env.AUTH_CLIENT_ID,
+    issuerBaseURL: process.env.AUTH_ISSUER_BASE_ID
 };
  
 // Auth router attaches /login, /logout, and /callback routes to the baseURL
