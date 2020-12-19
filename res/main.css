@@ -15,6 +15,7 @@ html, body {
 
 .thing-table-child {
     width: 85vw;
+    height: 75vh;
     overflow: auto;
 }
 
