@@ -8,7 +8,11 @@
                     </button>
             </div>
             <div class="modal-body">
-                <a href=<%=data.imageUrl %>><img class="center-image" height="50%" width="75%" src=<%= data.imageUrl %>></a>
+                <% if (data.imageUrl != "") { %>
+                    <a href=<%=data.imageUrl %>><img class="center-image" height="50%" width="75%" src=<%= data.imageUrl %>></a>
+                <% } else { %>
+                    <img class="center-image" height="50%" width="75%" src="default_thing.png">
+                <% } %>
                 <hr />
                 <p class="h5"><strong>Name</strong></p>
                 <%= data.name %><hr />
