@@ -81,7 +81,7 @@ router.post('/addThing', requiresAuth(), async (req, res, next) => {
     let imgBase64 = req.body.imageB64;
     let imgUrl = "";
     
-    if (imgBase64 != undefined || imgBase64 != "" || imgBase64 != null) {
+    if (imgBase64 != undefined && imgBase64 != "" && imgBase64 != null) {
         console.log("Attempting to upload to imgur.")
         await imgur.uploadBase64(imgBase64).then(function (json) {
             imgUrl = json.data.link
