@@ -8,48 +8,50 @@
         <header>
             <%- include('./partials/header'); %>
         </header>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
-            <strong>Error!</strong> Unable to add the thing.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        <div class="thing-table">
-            <div class="thing-table-child">
-                <table class="table table-striped table-hover">
-                    <thead class="thead-dark">
-                        <th scope="col">Image</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Date Purchased</th>
-                    </thead>
-                    <tbody>
-                        <% for (var i = 0; i < data.length; i++) { %>
-                            <tr href="#" data-toggle="modal" data-target="#item<%= data[i]._id %>Modal">
-                                <td>
-                                    <% if (data[i].imageUrl != "") { %>
-                                        <img width="100px" height="100px" src="<%= data[i].imageUrl %>" />
-                                    <% } else { %>
-                                        No image :(
-                                    <% } %>    
+        <div class="body-content">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+                <strong>Error!</strong> Unable to add the thing.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="thing-table">
+                <div class="thing-table-child">
+                    <table class="table table-striped table-hover">
+                        <thead class="thead-dark">
+                            <th scope="col">Image</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Date Purchased</th>
+                        </thead>
+                        <tbody>
+                            <% for (var i = 0; i < data.length; i++) { %>
+                                <tr href="#" data-toggle="modal" data-target="#item<%= data[i]._id %>Modal">
+                                    <td>
+                                        <% if (data[i].imageUrl != "") { %>
+                                            <img width="100px" height="100px" src="<%= data[i].imageUrl %>" />
+                                        <% } else { %>
+                                            No image :(
+                                        <% } %>    
+                                    </td>
+                                    <td>
+                                        <%= data[i].name %>
                                 </td>
-                                <td>
-                                    <%= data[i].name %>
-                               </td>
-                                <td>
-                                    <%= data[i].description %>
-                                </td>
-                                <td>
-                                    $<%= data[i].price %>
-                                </td>
-                                <td>
-                                    <%= data[i].date.toDateString() %>
-                                </td>
-                            </tr>
-                        <% }%>
-                    </tbody>
-                </table>
+                                    <td>
+                                        <%= data[i].description %>
+                                    </td>
+                                    <td>
+                                        $<%= data[i].price %>
+                                    </td>
+                                    <td>
+                                        <%= data[i].date.toDateString() %>
+                                    </td>
+                                </tr>
+                            <% }%>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <!-- Floating Action Button -->
