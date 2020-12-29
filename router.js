@@ -30,16 +30,17 @@ router.use((req, res, next) => {
 });
 
 // Sign-in,  Sign-out, and Sign-up Routes
-router.get('/login/:page', (req, res) => {
-    let page = req.params.page;
+
+router.get('/login/:page?', (req, res) => {
+    page = req.params == "/" ? req.params : "/profile";
 
     res.oidc.login({
-        returnTo: page,
+        returnTo: page
     });
 });
 
-router.get('/sign-up/:page', (req, res) => {
-    let page = req.params.page;
+router.get('/sign-up/:page?', (req, res) => {
+    let page = req.params;
 
     res.oidc.login({
         returnTo: page,
@@ -49,22 +50,18 @@ router.get('/sign-up/:page', (req, res) => {
     });
 });
 
-router.get('/logout/:page', (req, res) => {
-    let page = req.params.page;
-    
+router.get('/logout/:page', (req, res) => {    
     res.oidc.logout({
-        returnTo: page,
+        returnTo: '/',
     });
 });
 
-
 // Regular Routes
 router.get('/', (req, res) => {
-    // TODO - create landing page. for now, redirect to profile page
-    res.redirect("profile");
+    res.render("landing.html");
 });
 
-router.get('/profile', (req, res) => {
+router.get('/profile', requiresAuth(), (req, res) => {
     user = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
     userId = req.oidc.isAuthenticated() ? req.oidc.user.sub : '';
     res.render("profile.html");

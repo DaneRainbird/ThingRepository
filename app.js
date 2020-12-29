@@ -25,7 +25,10 @@ const config = {
     secret: process.env.SESSSECRET,
     baseURL: process.env.AUTH_BASE_URL,
     clientID: process.env.AUTH_CLIENT_ID,
-    issuerBaseURL: process.env.AUTH_ISSUER_BASE_ID
+    issuerBaseURL: process.env.AUTH_ISSUER_BASE_ID,
+    routes: {
+        login: false
+    }
 };
  
 // Auth router attaches /login, /logout, and /callback routes to the baseURL
