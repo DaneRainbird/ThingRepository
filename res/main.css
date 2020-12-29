@@ -24,7 +24,7 @@ html, body {
 	width: 60px;
 	height: 60px;
 	bottom: 40px;
-	right: 40px;
+	right: 30px;
 	background-color: red;
 	color: white;
 	border-radius: 50px;
@@ -103,6 +103,43 @@ header {
 @media (min-width: 360px) { 
     .display-4 {
         font-size: 2.3rem;
+    }
+}
+
+/* Table responsiveness */
+@media (max-width: 500px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    tr { 
+        border: 1px solid #ccc; 
+    }  
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 200px;
+    }
+    td img {
+        display: block;
+        width: 50vw;
+        height: 25vh;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    td:before {
+        position: absolute;
+        top: 12px;
+        left: 6px;
+        width: 200px;
+        padding-right: 40px;
+        white-space: nowrap;
+        margin-left: -150px;
     }
 }
 
