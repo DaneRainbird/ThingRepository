@@ -11,8 +11,9 @@
             <%- include('./partials/header'); %>
         </header>
         <div class="body-content">
+            <!-- Error messages -->
             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
-                <strong>Error!</strong> Unable to add the thing.
+                <strong>Error!</strong><p id="errorMessage"></p> 
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -29,8 +30,7 @@
                         </thead>
                         <tbody>
                             <% for (var i = 0; i < data.length; i++) { %>
-                                <tr href="#" data-toggle="modal" data-target="#item<%= data[i]._id %>Modal">
-                                    <td style="display: none;" id="<%= data[i]._id %>"></td>
+                                <tr href="#" id="<%= data[i]._id %>">
                                     <td>
                                         <% if (data[i].imageUrl != "") { %>
                                             <img width="100px" height="100px" src="<%= data[i].imageUrl %>" />
@@ -61,17 +61,22 @@
         <a href="#" class="float" data-toggle="modal" data-target="#addItemModel">
             <div class="text">+</div>
         </a>
+
+        <!-- Add Item Modal -->
         <%- include('./partials/addItemModal'); %>
 
         <!-- Item Modal to be dynamically filled -->
         <%- include('./partials/itemModal'); %>
 
+        <!-- Footer -->
         <footer>
             <%- include('./partials/footer'); %>
         </footer>
+
         <!-- Script Loading -->
         <%- include('./partials/scripts'); %>
+
         <!-- AJAX Requests -->
-        <%- include('./partials/ajax-requests'); %>
+        <script src="/js/ajax.js"></script>
     </body>
 </html>

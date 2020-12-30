@@ -30,17 +30,19 @@ router.use((req, res, next) => {
 });
 
 // Sign-in,  Sign-out, and Sign-up Routes
-
 router.get('/login/:page?', (req, res) => {
-    page = req.params == "/" ? req.params : "/profile";
+    let page = req.params == "/" ? req.params : "/profile";
 
     res.oidc.login({
         returnTo: page
     });
+
+    user = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
+    userId = req.oidc.isAuthenticated() ? req.oidc.user.sub : '';
 });
 
 router.get('/sign-up/:page?', (req, res) => {
-    let page = req.params;
+    let page = req.params == "/" ? req.params : "/profile";
 
     res.oidc.login({
         returnTo: page,
@@ -56,14 +58,20 @@ router.get('/logout/:page', (req, res) => {
     });
 });
 
+// Helper Routes
+router.get('/currentUser', requiresAuth(), (req, res) => {
+    res.status(200).json({
+        userId: res.locals.userId,
+        userName: res.locals.user
+    });
+})
+
 // Regular Routes
 router.get('/', (req, res) => {
     res.render("landing.html");
 });
 
 router.get('/profile', requiresAuth(), (req, res) => {
-    user = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
-    userId = req.oidc.isAuthenticated() ? req.oidc.user.sub : '';
     res.render("profile.html");
 });
 
@@ -76,11 +84,10 @@ router.get('/things', requiresAuth(), (req, res) => {
 
 router.get("/getOneThing", requiresAuth(), (req, res) => {
     let itemId = req.query.itemId;
-    let userId = req.query.userId;
 
     Thing.findById(itemId).populate('Users').exec(function(err, thing) {
         if (err) throw err;
-        if (thing.user != userId) {
+        if (thing.user != res.locals.userId) {
             res.status(401).send("Provided User ID does not match user ID in item.")
         } else {
             res.status(200).json(thing);
