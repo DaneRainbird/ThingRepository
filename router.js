@@ -74,6 +74,20 @@ router.get('/things', requiresAuth(), (req, res) => {
     });
 });
 
+router.get("/getOneThing", requiresAuth(), (req, res) => {
+    let itemId = req.query.itemId;
+    let userId = req.query.userId;
+
+    Thing.findById(itemId).populate('Users').exec(function(err, thing) {
+        if (err) throw err;
+        if (thing.user != userId) {
+            res.status(401).send("Provided User ID does not match user ID in item.")
+        } else {
+            res.status(200).json(thing);
+        }
+    });
+})
+
 router.post('/addThing', requiresAuth(), async (req, res, next) => {
     let imgBase64 = req.body.imageB64;
     let imgUrl = "";

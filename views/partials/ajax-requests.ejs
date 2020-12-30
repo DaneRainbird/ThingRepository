@@ -36,4 +36,40 @@
             }
         });
     });
+
+    // Get specific item value (for modal loading)
+    $("#thingTable").on('click', 'tr', function(event) {
+        let itemId = $(this).find("td")[0].id;
+        event.preventDefault();
+        $.ajax({
+            type: "GET",
+            url: "/getOneThing",
+            data: {
+                itemId: itemId,
+                userId: "<%= userId %>"
+            },
+            success: function(result) {
+                let itemModal = $("#itemModal");
+                // Update modal values dynamically 
+                if (result.imageUrl != "") {
+                    itemModal.find(".center-image").attr("src", result.imageUrl);
+                } else {
+                    itemModal.find(".center-image").attr("src", "default_thing.png");
+                }
+
+                itemModal.find("#thingTitle").html("<strong>" + result.name + "</strong>");
+                itemModal.find(".thingName").text(result.name);
+                itemModal.find(".thingDescription").text(result.description);
+                itemModal.find(".thingPrice").text("$" + result.price);
+                itemModal.find(".thingDate").text(new Date(result.date).toDateString())
+                itemModal.find("#delete-button").val(result._id);
+                
+                // Show the modal
+                itemModal.modal('show');
+            },
+            error: function(result, statusCode, xhr) {
+                console.log("Failed with error " + result.status);
+            }
+        });
+    });
 </script>

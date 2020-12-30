@@ -19,7 +19,7 @@
             </div>
             <div class="thing-table">
                 <div class="thing-table-child">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" id="thingTable">
                         <thead class="thead-dark">
                             <th scope="col">Image</th>
                             <th scope="col">Name</th>
@@ -30,6 +30,7 @@
                         <tbody>
                             <% for (var i = 0; i < data.length; i++) { %>
                                 <tr href="#" data-toggle="modal" data-target="#item<%= data[i]._id %>Modal">
+                                    <td style="display: none;" id="<%= data[i]._id %>"></td>
                                     <td>
                                         <% if (data[i].imageUrl != "") { %>
                                             <img width="100px" height="100px" src="<%= data[i].imageUrl %>" />
@@ -62,10 +63,8 @@
         </a>
         <%- include('./partials/addItemModal'); %>
 
-        <!-- Modals for clicking on each item in the list -->
-        <% for (var i = 0; i < data.length; i++){ %>
-            <%- include('./partials/existingItemModal', {data: data[i]}); %>
-        <% } %>
+        <!-- Item Modal to be dynamically filled -->
+        <%- include('./partials/itemModal'); %>
 
         <footer>
             <%- include('./partials/footer'); %>
