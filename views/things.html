@@ -32,35 +32,27 @@
                             <% for (var i = 0; i < data.length; i++) { %>
                                 <tr href="#" id="<%= data[i]._id %>">
                                     <td>
-                                        <% if (data[i].imageUrl != "") { %>
-                                            <img width="100px" height="100px" src="<%= data[i].imageUrl %>" />
-                                        <% } else { %>
-                                            <img width="100px" height="100px" src="default_thing.png" />
-                                        <% } %>    
+                                    <% if (data[i].imageUrl != "") { %>
+                                        <img width="100px" height="100px" src="<%= data[i].imageUrl %>" />
+                                    <% } else { %>
+                                        <img width="100px" height="100px" src="default_thing.png" />
+                                    <% } %>    
                                     </td>
-                                    <td>
-                                        <%= data[i].name %>
-                                    </td>
-                                    <td>
-                                        <%= data[i].description %>
-                                    </td>
-                                    <td>
-                                        $<%= data[i].price %>
-                                    </td>
-                                    <td>
-                                        <%= data[i].date.toDateString() %>
-                                    </td>
+                                    <td><%= data[i].name %></td>
+                                    <td><%= data[i].description %></td>
+                                    <td>$<%= data[i].price %></td>
+                                    <td><%= data[i].date.toDateString() %></td>
                                 </tr>
                             <% }%>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <!-- Floating Action Button -->
+            <a href="#" class="float" data-toggle="modal" data-target="#addItemModel">
+                <div class="text">+</div>
+            </a>
         </div>
-        <!-- Floating Action Button -->
-        <a href="#" class="float" data-toggle="modal" data-target="#addItemModel">
-            <div class="text">+</div>
-        </a>
 
         <!-- Add Item Modal -->
         <%- include('./partials/addItemModal'); %>
