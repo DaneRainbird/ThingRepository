@@ -73,8 +73,17 @@
             <%- include('./partials/footer'); %>
         </footer>
 
-        <!-- Script Loading -->
+        <!-- Scripts  -->
         <%- include('./partials/scripts'); %>
+
+        <script>
+            $('#itemModal').on('hidden.bs.modal', () => {
+                if ($('#itemModal').find('#delete-menu').hasClass("show")) {
+                    $('#itemModal').find('#delete-menu').collapse('toggle');
+                    $('#itemModal').find('#delete-start').collapse('toggle');
+                }
+            }) 
+        </script>
 
         <!-- AJAX Requests -->
         <script src="/js/ajax.js"></script>
