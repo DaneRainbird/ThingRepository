@@ -12,6 +12,7 @@ Authentication is handled by [Auth0](https://auth0.com/), using the `express-ope
 
 ```
 PORT
+MONGO_DB_URL
 SESSSECRET
 AUTH_BASE_URL
 AUTH_CLIENT_ID
