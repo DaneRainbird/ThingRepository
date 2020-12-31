@@ -2,7 +2,6 @@ let express = require('express');
 let { requiresAuth } = require('express-openid-connect');
 let imgur = require('imgur');
 let mongoose = require('mongoose');
-let createError = require('http-errors');
 var router = express.Router();
 
 imgur.setAPIUrl('https://api.imgur.com/3/');
@@ -110,7 +109,7 @@ router.post('/addThing', requiresAuth(), async (req, res, next) => {
         user: res.locals.userId
     });
     newThing.save((err) => {
-        if (err) createError(400, 'An error occurred adding to the database.');
+        if (err) next(err);
     });
 
     res.redirect('/things');
