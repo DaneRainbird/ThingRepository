@@ -79,6 +79,11 @@ header {
     outline: black solid 2px;
 }
 
+.alertContainer {
+    display: flex;
+    justify-content: center;
+}
+
 /* Fixes for broken stuff(?) in BS4.5 */
 .navbar {
     padding: .5rem 1rem !important;

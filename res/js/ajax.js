@@ -10,7 +10,8 @@ $('#thingForm').submit(function(event) {
         },
         error: function(result, statusCode, xhr) {
             console.log("Failed with error " + result.status);
-            $('#addItemModel').modal('hide');
+            $('.modal').modal('hide');
+            $('.alert').find('#errorMessage').html("An error occurred while adding your thing: <em>" + result.responseJSON.message + "</em>");
             $('.alert').show();
         },
     });
@@ -29,8 +30,8 @@ $(document).on('click', '#delete-button', function(event) {
             location.reload();
         },
         error: function(result, statusCode, xhr) {
-            console.log("Failed with error " + result.status);
-            $('#addItemModel').modal('hide');
+            $('.modal').modal('hide');
+            $('.alert').find('#errorMessage').html("An error occurred while deleting your thing: <em>" + result.responseJSON.message + "</em>");
             $('.alert').show();
         }
     });
@@ -39,7 +40,6 @@ $(document).on('click', '#delete-button', function(event) {
 // Get specific item value (for modal loading)
 $("#thingTable").on('click', 'tr', function(event) {
     let itemId = $(this).attr('id');
-    let userId = "";
     event.preventDefault();
 
     $.ajax({
@@ -68,7 +68,8 @@ $("#thingTable").on('click', 'tr', function(event) {
             itemModal.modal('show');
         },
         error: function(result, statusCode, xhr) {
-            console.log("Failed with error " + result.status);
+            $('.alert').find('#errorMessage').html("An error occurred while loading your thing: <em>" + result.responseJSON.message + "</em>");
+            $('.alert').show();
         }
     });
 });
