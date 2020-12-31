@@ -4,6 +4,7 @@ let bodyParser = require("body-parser");
 let dotEnv = require("dotenv");
 let { auth } = require('express-openid-connect');
 let { requiresAuth } = require('express-openid-connect');
+let mongoose = require("mongoose");
 let app = express();
 
 // Configure imports
@@ -30,7 +31,7 @@ const config = {
         login: false
     }
 };
- 
+
 // Auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
@@ -49,5 +50,18 @@ app.use((error, req, res, next) => {
     res.end();
 })
 
-// Run the server 
-app.listen(process.env.PORT, () => console.log("Server running at port " + process.env.PORT));
+// Perform MongoDB connection
+mongoose.connect(process.env.MONGO_DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
+let client = mongoose.connection;
+
+// If there's an error with connecting to Mongo, end execution 
+client.on('error', () => {
+    console.log("Unable to connect to DB at " + process.env.MONGO_DB_URL + ". Exiting...");
+    process.exit(1);    
+});
+
+// If successful connection, run the server
+client.once('open', () => {
+    console.log("Successfully connected to DB at " + process.env.MONGO_DB_URL);
+    app.listen(process.env.PORT, () => console.log("Server running at port " + process.env.PORT));
+});

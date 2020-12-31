@@ -1,24 +1,14 @@
 let express = require('express');
 let { requiresAuth } = require('express-openid-connect');
-let mongoose = require('mongoose');
 let imgur = require('imgur');
+let mongoose = require('mongoose');
 let createError = require('http-errors');
 var router = express.Router();
 
 imgur.setAPIUrl('https://api.imgur.com/3/');
 
-// MongoDB variables and connection
-let url = "mongodb://localhost:27017/data";
+// Mongoose Models
 let Thing = require('./models/things.js');
-
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
-    if (err) {
-        console.log("Could not connect to DB");
-        throw err; 
-    } else {
-        console.log("Connected to DB at " + url);
-    }
-});
 
 // Locals used in multiple pages
 router.use((req, res, next) => {
