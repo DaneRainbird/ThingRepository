@@ -18,7 +18,7 @@ router.use((req, res, next) => {
     next(); 
 });
 
-// Sign-in,  Sign-out, and Sign-up Routes
+// Auth0 Sign-In Route
 router.get('/login/:page?', (req, res) => {
     let page = req.params == "/" ? req.params : "/profile";
 
@@ -30,6 +30,7 @@ router.get('/login/:page?', (req, res) => {
     userId = req.oidc.isAuthenticated() ? req.oidc.user.sub : '';
 });
 
+// Auth0 Sign-Up Route
 router.get('/sign-up/:page?', (req, res) => {
     let page = req.params == "/" ? req.params : "/profile";
 
@@ -41,13 +42,14 @@ router.get('/sign-up/:page?', (req, res) => {
     });
 });
 
+// Auth0 Sign-Out Route
 router.get('/logout/:page', (req, res) => {    
     res.oidc.logout({
         returnTo: '/',
     });
 });
 
-// Helper Routes
+// Helper Route - returns current username and Auth0 ID
 router.get('/currentUser', requiresAuth(), (req, res) => {
     res.status(200).json({
         userId: res.locals.userId,
@@ -55,15 +57,17 @@ router.get('/currentUser', requiresAuth(), (req, res) => {
     });
 })
 
-// Regular Routes
+// Landing Page Route
 router.get('/', (req, res) => {
     res.render("landing.html");
 });
 
+// Profile Page Route
 router.get('/profile', requiresAuth(), (req, res) => {
     res.render("profile.html");
 });
 
+// User's Things Page Route 
 router.get('/things', requiresAuth(), (req, res) => {
     Thing.find({user: req.oidc.user.sub}).populate('Users').exec(function(err, things) {
         if (err) throw err;
@@ -71,6 +75,7 @@ router.get('/things', requiresAuth(), (req, res) => {
     });
 });
 
+// Helper Route - Get JSON Data for a specific Thing
 router.get("/getOneThing", requiresAuth(), (req, res) => {
     let itemId = req.query.itemId;
 
@@ -84,10 +89,12 @@ router.get("/getOneThing", requiresAuth(), (req, res) => {
     });
 })
 
+// Helper Route - Add Thing 
 router.post('/addThing', requiresAuth(), async (req, res, next) => {
     let imgBase64 = req.body.imageB64;
     let imgUrl = "";
     
+    // If the user has provided an image, upload it to Imgur and return the URL. 
     if (imgBase64 != undefined && imgBase64 != "" && imgBase64 != null) {
         console.log("Attempting to upload to imgur.")
         await imgur.uploadBase64(imgBase64).then(function (json) {
@@ -122,6 +129,7 @@ router.post('/addThing', requiresAuth(), async (req, res, next) => {
     });
 });
 
+// Helper Route - Delete Thing
 router.delete('/deleteThing', requiresAuth(), (req, res, next) => {
     Thing.deleteOne({_id: new mongoose.Types.ObjectId(req.body.id)}).exec((err) => {
         if (err) {
