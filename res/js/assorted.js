@@ -21,13 +21,3 @@ function convertToB64() {
         fileReader.readAsDataURL(fileToLoad);
     }
 }  
-function displayLoading() {
-    let nameInput = document.getElementsByName('name')[0];
-    let descInput = document.getElementsByName('description')[0];
-    let priceInput = document.getElementsByName('price')[0];
-    let dateInput = document.getElementsByName('date')[0];
-
-    if (nameInput.value != "" && descInput.value != "" && priceInput.value != "" && dateInput.value != "") {
-        document.getElementById('waitText').style.display = "flex";
-    }
-}

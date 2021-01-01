@@ -1,16 +1,25 @@
  // Create item (form) request
 $('#thingForm').submit(function(event) {
     event.preventDefault();
+    $('#waitText').css("display", "flex");
     $.ajax({
         type: "POST",
         url: "/addThing",
         data: $(thingForm).serialize(),
         success: function(result, statusCode, xhr) {
-            location.reload();
+            // Reset Input Modal
+            $('.modal').resetModal();
+            
+            // Programatically append table
+            let table = $('#thingTable');
+            let imgUrl = result.imageUrl != '' ? result.imageUrl : "default_thing.png";
+            table.append(
+                '<tr href="#" id="' + result._id + '"><td><img width="100px" height="100px" src="' + imgUrl + '" /></td><td>' + result.name + '</td><td>' + result.description + '</td><td>$' + result.price + '</td><td>' + new Date(result.date).toDateString() + '</td></tr>' 
+            )
         },
         error: function(result, statusCode, xhr) {
             console.log("Failed with error " + result.status);
-            $('.modal').modal('hide');
+            $('.modal').resetModal();
             $('.alert').find('#errorMessage').html("An error occurred while adding your thing: <em>" + result.responseJSON.message + "</em>");
             $('.alert').show();
         },
@@ -20,14 +29,16 @@ $('#thingForm').submit(function(event) {
 // Delete item request
 $(document).on('click', '#delete-button', function(event) {
     event.preventDefault();
+    let id = $(this).val();
     $.ajax({
         type: "DELETE",
         url: "/deleteThing",
         data: {
-            id: $(this).val()  
+            id: id
         },
         success: function(result, statusCode, xhr) {
-            location.reload();
+            $('#thingTable').find("#" + id).remove();
+            $('.modal').modal('hide');
         },
         error: function(result, statusCode, xhr) {
             $('.modal').modal('hide');
@@ -73,3 +84,12 @@ $("#thingTable").on('click', 'tr', function(event) {
         }
     });
 });
+
+// Helper Functions
+$.fn.resetModal = function() {
+    $(this).modal('hide');
+    $(this).find('form')[0].reset();
+    $(this).find("#waitText").css("display", "none");
+    $(this).find('#imageB64').val("");
+    return;
+};

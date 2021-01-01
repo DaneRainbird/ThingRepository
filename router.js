@@ -110,9 +110,16 @@ router.post('/addThing', requiresAuth(), async (req, res, next) => {
     });
     newThing.save((err) => {
         if (err) next(err);
+        // Send all values aside from userId
+        res.status(200).json({
+            _id: newThing._id,
+            name: newThing.name,
+            price: newThing.price,
+            description: newThing.description,
+            date: newThing.date,
+            imageUrl: newThing.imageUrl
+        });
     });
-
-    res.redirect('/things');
 });
 
 router.delete('/deleteThing', requiresAuth(), (req, res, next) => {

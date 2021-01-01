@@ -15,7 +15,7 @@
                     <b>Date: </b><input type="date" name="date" value="" required>
                     <b>Image: </b><input type="file" name="image" id="imageInput" accept="image/*" onchange="convertToB64()" value = "">
                     <input type="hidden" id="imageB64" name="imageB64" value="">
-                    <button type="submit" class="btn btn-primary" onclick="displayLoading()" id="addThingButton">Add Thing</button>
+                    <button type="submit" class="btn btn-primary" id="addThingButton">Add Thing</button>
                 </form>
                 <div class="loading-body">
                     <img src="loading.gif" id="waitText"/>
