@@ -142,4 +142,9 @@ router.delete('/deleteThing', requiresAuth(), (req, res, next) => {
     res.status(200).send();
 });
 
+// Catch-All / 404 Page
+router.get("*", (req, res) => {
+    res.status(404).render("404.html");
+})
+
 module.exports = router;
