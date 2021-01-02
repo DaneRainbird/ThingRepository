@@ -84,6 +84,29 @@ header {
     justify-content: center;
 }
 
+.profileContainer {
+    width: 75vw;
+    background-color: lightgray;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profileColumn {
+    flex: 50%;
+    padding: 20px;
+}
+
+.profileTitle {
+    text-align: center;
+}
+
+.profileImage {
+    float: right;
+}
+
 /* Fixes for broken stuff(?) in BS4.5 */
 .navbar {
     padding: .5rem 1rem !important;

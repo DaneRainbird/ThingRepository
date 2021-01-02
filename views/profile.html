@@ -11,12 +11,19 @@
         <%- include('./partials/header'); %>
     </header>
     <body>
-        <br />
-        <% if (isAuthenticated) { %>
-            <p>You are signed in as <%=user%></p>
-        <% } else { %>
-            <p>You're not signed in.</p>
-        <% } %>
+        <div class="profileContainer">
+            <div class="profileColumn">
+                <h1 class="profileTitle">About You</h1>
+                <hr />
+                <p>You are signed in as: <%=user%>.<img class="profileImage" src="<%=userPicture %>" /></p>
+            </div>
+            <div class="profileColumn">
+                <h1 class="profileTitle">Your Stats</h1>
+                <hr />
+                <p>placeholder text woo</p>
+            </div>
+        </div>
+
         <footer>
             <%- include('./partials/footer'); %>
         </footer>
