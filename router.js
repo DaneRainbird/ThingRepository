@@ -15,6 +15,7 @@ router.use((req, res, next) => {
     res.locals.activeRoute = req.originalUrl;
     res.locals.user = req.oidc.isAuthenticated() ? req.oidc.user.name : '';
     res.locals.userId = req.oidc.isAuthenticated() ? req.oidc.user.sub : '';
+    res.locals.userPicture = req.oidc.isAuthenticated() ? req.oidc.user.picture : '';
     next(); 
 });
 
@@ -53,7 +54,8 @@ router.get('/logout/:page', (req, res) => {
 router.get('/currentUser', requiresAuth(), (req, res) => {
     res.status(200).json({
         userId: res.locals.userId,
-        userName: res.locals.user
+        userName: res.locals.user,
+        picture: res.locals.userPicture
     });
 })
 
