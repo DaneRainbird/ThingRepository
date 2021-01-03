@@ -73,7 +73,7 @@ router.get('/profile', requiresAuth(), (req, res) => {
 // User's Things Page Route 
 router.get('/things', requiresAuth(), (req, res) => {
     Thing.find({user: req.oidc.user.sub}).populate('Users').exec(function(err, things) {
-        if (err) throw err;
+        if (err) next(err);
         res.render("things.html", {data: things});
     });
 });
