@@ -105,7 +105,6 @@ router.post('/addThing', requiresAuth(), async (req, res, next) => {
             console.log("URL is " + imgUrl);
         }).catch(err => {
             next(err);
-            return; // prevent continued execution
         });
     };
 
