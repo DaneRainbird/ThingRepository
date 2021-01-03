@@ -68,7 +68,7 @@ $("#thingTable").on('click', 'tr', function(event) {
                 itemModal.find(".center-image").attr("src", "default_thing.png");
             }
 
-            itemModal.find("#thingTitle").html("<strong>" + result.name + "</strong>");
+            itemModal.find("#thingTitle").css('font-weight', 'bold').text(result.name);
             itemModal.find(".thingName").text(result.name);
             itemModal.find(".thingDescription").text(result.description);
             itemModal.find(".thingPrice").text("$" + result.price);
