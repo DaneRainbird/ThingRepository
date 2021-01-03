@@ -2,6 +2,7 @@ let express = require('express');
 let { requiresAuth } = require('express-openid-connect');
 let imgur = require('imgur');
 let mongoose = require('mongoose');
+let xss = require('xss');
 var router = express.Router();
 
 imgur.setAPIUrl('https://api.imgur.com/3/');
@@ -82,7 +83,7 @@ router.get("/getOneThing", requiresAuth(), (req, res) => {
     let itemId = req.query.itemId;
 
     Thing.findById(itemId).populate('Users').exec(function(err, thing) {
-        if (err) throw err;
+        if (err) next(err);
         if (thing.user != res.locals.userId) {
             res.status(401).send("Provided User ID does not match user ID in item.")
         } else {
@@ -110,12 +111,12 @@ router.post('/addThing', requiresAuth(), async (req, res, next) => {
 
     let newThing = Thing({
         _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        price: req.body.price,
-        description: req.body.description,
-        date: req.body.date,
-        imageUrl: imgUrl,
-        user: res.locals.userId
+        name: xss(req.body.name),
+        price: xss(req.body.price),
+        description: xss(req.body.description),
+        date: xss(req.body.date),
+        imageUrl: xss(imgUrl),
+        user: xss(res.locals.userId)
     });
     newThing.save((err) => {
         if (err) next(err);
