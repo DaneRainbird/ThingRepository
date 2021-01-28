@@ -62,7 +62,12 @@ router.get('/currentUser', requiresAuth(), (req, res) => {
 
 // Landing Page Route
 router.get('/', (req, res) => {
-    res.render("landing.html");
+    if (!req.oidc.isAuthenticated()) {
+        res.render("landing.html");
+    } else {
+        res.redirect("/profile")
+    }
+    
 });
 
 // Profile Page Route
