@@ -67,14 +67,14 @@ router.get('/', (req, res) => {
 
 // Profile Page Route
 router.get('/profile', requiresAuth(), (req, res) => {
-    res.render("profile.html");
+    res.render("profile.html", {page_title: 'Profile'});
 });
 
 // User's Things Page Route 
 router.get('/things', requiresAuth(), (req, res) => {
     Thing.find({user: req.oidc.user.sub}).populate('Users').exec(function(err, things) {
         if (err) next(err);
-        res.render("things.html", {data: things});
+        res.render("things.html", {data: things, page_title: 'Things'});
     });
 });
 
@@ -144,7 +144,7 @@ router.delete('/deleteThing', requiresAuth(), (req, res, next) => {
 
 // Catch-All / 404 Page
 router.get("*", (req, res) => {
-    res.status(404).render("404.html");
+    res.status(404).render("404.html", {page_title: '404'});
 })
 
 module.exports = router;

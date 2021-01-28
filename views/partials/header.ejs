@@ -6,10 +6,10 @@
     <div class="collapse navbar-collapse justify-content-between" id="navbarText">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <% if (isAuthenticated) { %>
-                <li class="nav-item">
+                <li class="nav-item <% if (title == 'Profile') { %> active <% } %>">
                     <a class="nav-link" href="/profile">Your Profile</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <% if (title == 'Things') { %> active <% } %>">
                     <a class="nav-link" href="/things">Your Things</a>
                 </li>
             <% } %>
