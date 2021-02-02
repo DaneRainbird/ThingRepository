@@ -140,11 +140,25 @@ router.post('/addThing', requiresAuth(), async (req, res, next) => {
 router.delete('/deleteThing', requiresAuth(), (req, res, next) => {
     Thing.deleteOne({_id: new mongoose.Types.ObjectId(req.body.id)}).exec((err) => {
         if (err) {
-            console.log(error);
             next(err);
         }
     });
     res.status(200).send();
+});
+
+// Helper Route - Get JSON data for current user's statistics
+router.get('/currentUserStatistics', requiresAuth(), (req, res, next) => {
+    let totalPrice = 0;
+    Thing.find({user: res.locals.userId}).exec((err, things) => {
+        if (err) next(err);
+        
+        // Count total cost
+        for (let i = 0; i < things.length; i++) {
+            totalPrice += things[i].price;
+        }
+
+        res.status(200).json({totalPrice: totalPrice, numItems: things.length});
+    });
 });
 
 // Catch-All / 404 Page

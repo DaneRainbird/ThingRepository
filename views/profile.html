@@ -20,7 +20,12 @@
             <div class="profileColumn">
                 <h1 class="profileTitle">Your Stats</h1>
                 <hr />
-                <p>placeholder text woo</p>
+                <p class="profileStatisticsTitle">Your Statistics:</p>
+                <ul class="profileStatisticsList">
+                    <li class="profileStatisticsNumberItems">Error loading your statistics.</li>
+                    <li class="profileStatisticsTotalCost"></li>
+                </ul>
+                <img class="profileStatisticsLoading" src="loading.gif" />
             </div>
         </div>
 
@@ -28,5 +33,23 @@
             <%- include('./partials/footer'); %>
         </footer>
         <%- include('./partials/scripts'); %>
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "/currentUserStatistics",
+                    success: function(result) {
+                        $('.profileStatisticsLoading').fadeOut('slow', () => {
+                            $('.profileStatisticsNumberItems').text("You have collected " + result.numItems + " things.");
+                            $('.profileStatisticsTotalCost').text("You have spent $" + result.totalPrice + " in total.");
+                            $('.profileStatisticsList').fadeIn('slow');
+                        });
+                    },
+                    error: function(result, statusCode, xhr) {
+                        $('.profileStatisticsLoading').fadeOut('slow');
+                    }
+                });
+            }); 
+        </script>
     </body>
 </html>

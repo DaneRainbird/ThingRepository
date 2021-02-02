@@ -107,6 +107,15 @@ header {
     float: right;
 }
 
+.profileStatisticsList {
+    display: none;
+}
+
+.profileStatisticsTitle {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
 /* Fixes for broken stuff(?) in BS4.5 */
 .navbar {
     padding: .5rem 1rem !important;
