@@ -51,38 +51,42 @@ $(document).on('click', '#delete-button', function(event) {
 // Get specific item value (for modal loading)
 $("#thingTable").on('click', 'tr', function(event) {
     let itemId = $(this).attr('id');
-    event.preventDefault();
 
-    $.ajax({
-        type: "GET",
-        url: "/getOneThing",
-        data: {
-            itemId: itemId,
-        },
-        success: function(result) {
-            let itemModal = $("#itemModal");
-            // Update modal values dynamically 
-            if (result.imageUrl != "") {
-                itemModal.find(".center-image").attr("src", result.imageUrl);
-            } else {
-                itemModal.find(".center-image").attr("src", "default_thing.png");
-            }
+    // Ensure that user has clicked on row rather than column head before continuing
+    if (itemId != undefined) {
+        event.preventDefault();
 
-            itemModal.find("#thingTitle").css('font-weight', 'bold').text(result.name);
-            itemModal.find(".thingName").text(result.name);
-            itemModal.find(".thingDescription").text(result.description);
-            itemModal.find(".thingPrice").text("$" + result.price);
-            itemModal.find(".thingDate").text(new Date(result.date).toDateString())
-            itemModal.find("#delete-button").val(result._id);
+        $.ajax({
+            type: "GET",
+            url: "/getOneThing",
+            data: {
+                itemId: itemId,
+            },
+            success: function(result) {
+                let itemModal = $("#itemModal");
+                // Update modal values dynamically 
+                if (result.imageUrl != "") {
+                    itemModal.find(".center-image").attr("src", result.imageUrl);
+                } else {
+                    itemModal.find(".center-image").attr("src", "default_thing.png");
+                }
+
+                itemModal.find("#thingTitle").css('font-weight', 'bold').text(result.name);
+                itemModal.find(".thingName").text(result.name);
+                itemModal.find(".thingDescription").text(result.description);
+                itemModal.find(".thingPrice").text("$" + result.price);
+                itemModal.find(".thingDate").text(new Date(result.date).toDateString())
+                itemModal.find("#delete-button").val(result._id);
                 
-            // Show the modal
-            itemModal.modal('show');
-        },
-        error: function(result, statusCode, xhr) {
-            $('.alert').find('#errorMessage').html("An error occurred while loading your thing: <em>" + result.responseJSON.message + "</em>");
-            $('.alert').show();
-        }
-    });
+                // Show the modal
+                itemModal.modal('show');
+            },
+            error: function(result, statusCode, xhr) {
+                $('.alert').find('#errorMessage').html("An error occurred while loading your thing: <em>" + result.responseJSON.message + "</em>");
+                $('.alert').show();
+            }
+        });
+    }
 });
 
 // Helper Functions
