@@ -6,6 +6,7 @@ let { auth } = require('express-openid-connect');
 let { requiresAuth } = require('express-openid-connect');
 let mongoose = require("mongoose");
 let Compress = require("compress.js");
+let dataTables = require('simple-datatables');
 let app = express();
 
 // Configure imports
@@ -19,6 +20,7 @@ app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist')
 app.use('/popperjs', express.static(__dirname + '/node_modules/@popperjs/core/dist'))
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use('/js/compress.js', express.static(__dirname + '/node_modules/compress.js/index.js'));
+app.use('/js/simpledatatables', express.static(__dirname + '/node_modules/simple-datatables/dist'))
 app.use(express.static('res'));
 
 // Setup Auth0 authentication

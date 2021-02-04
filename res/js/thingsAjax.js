@@ -1,3 +1,9 @@
+// Convert table to datatable
+import {DataTable} from "/js/simpledatatables/module/index.js"
+const dataTable = new DataTable("#thingTable", {
+    perPage: 5
+});
+ 
  // Create item (form) request
 $('#thingForm').submit(function(event) {
     event.preventDefault();
@@ -11,11 +17,14 @@ $('#thingForm').submit(function(event) {
             $('.modal').resetModal();
             
             // Programatically append table
-            let table = $('#thingTable');
             let imgUrl = result.imageUrl != '' ? result.imageUrl : "default_thing.png";
-            table.append(
-                '<tr href="#" id="' + result._id + '"><td><img width="100px" height="100px" src="' + imgUrl + '" /></td><td>' + result.name + '</td><td>' + result.description + '</td><td>$' + result.price + '</td><td>' + new Date(result.date).toDateString() + '</td></tr>' 
-            )
+            dataTable.rows().add(['<img width="100px" height="100px" src="' + imgUrl + '" />', result.name, result.description, '$' + result.price, new Date(result.date).toDateString()])
+            
+            dataTable.page(dataTable.totalPages);
+
+            // Set ID for last added item
+            let newItem = dataTable.body.querySelector('tr:last-child');
+            newItem.id = result._id;
         },
         error: function(result, statusCode, xhr) {
             console.log("Failed with error " + result.status);
@@ -37,7 +46,7 @@ $(document).on('click', '#delete-button', function(event) {
             id: id
         },
         success: function(result, statusCode, xhr) {
-            $('#thingTable').find("#" + id).remove();
+            dataTable.rows().remove(dataTable.body.querySelector("tr[id='" + id + '\']').dataIndex);
             $('.modal').modal('hide');
         },
         error: function(result, statusCode, xhr) {
@@ -97,3 +106,17 @@ $.fn.resetModal = function() {
     $(this).find('#imageB64').val("");
     return;
 };
+
+// Resets delete buttons
+$('#itemModal').on('hidden.bs.modal', () => {
+    if ($('#itemModal').find('#delete-menu').hasClass("show")) {
+        $('#itemModal').find('#delete-menu').collapse('toggle');
+        $('#itemModal').find('#delete-start').collapse('toggle');
+    }
+}) 
+
+// Closes the alert popup boxes
+$('.close').on('click', (e) => {
+    e.preventDefault();
+    $('.alert').fadeOut();
+})
