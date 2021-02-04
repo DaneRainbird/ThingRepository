@@ -17,7 +17,7 @@ $('#thingForm').submit(function(event) {
             $('.modal').resetModal();
             
             // Programatically append table
-            let imgUrl = result.imageUrl != '' ? result.imageUrl : "default_thing.png";
+            let imgUrl = result.imageUrl != '' ? result.imageUrl : "img/default_thing.png";
             dataTable.rows().add(['<img width="100px" height="100px" src="' + imgUrl + '" />', result.name, result.description, '$' + result.price, new Date(result.date).toDateString()])
             
             dataTable.page(dataTable.totalPages);
@@ -77,7 +77,7 @@ $("#thingTable").on('click', 'tr', function(event) {
                 if (result.imageUrl != "") {
                     itemModal.find(".center-image").attr("src", result.imageUrl);
                 } else {
-                    itemModal.find(".center-image").attr("src", "default_thing.png");
+                    itemModal.find(".center-image").attr("src", "img/default_thing.png");
                 }
 
                 itemModal.find("#thingTitle").css('font-weight', 'bold').text(result.name);
