@@ -24,3 +24,9 @@ AUTH_ISSUER_BASE_ID
 
 ## Running ##
 Run `node .\app.js` and navigate to `localhost:8080`, or whichever URL you have provided as the base URL.
+
+## Caveats / Limitations ##
+This is a hobbyist project, and probably shouldn't be used in a real-world environment.  
+
+- This *does not* work on Internet Explorer. All requests coming from an IE UA string will be redirected to a page that asks the user to update their browser.
+- I am *not* a programmer by trade - I can program, just not amazingly. As a result, the code here isn't the most efficient. If you see something that could be made better, please raise a pull request!

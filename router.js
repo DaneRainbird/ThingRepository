@@ -20,6 +20,16 @@ router.use((req, res, next) => {
     next(); 
 });
 
+// Middleware to prevent access from Internet Explorer
+router.use((req, res, next) => {
+    let userAgent = req.get('user-agent');
+    if (!userAgent.includes('Trident')) { // "Trident" is the IE layout engine
+        next();
+    } else {
+        res.render('unsupported.html');
+    }
+});
+
 // Auth0 Sign-In Route
 router.get('/login/:page?', (req, res) => {
     let page = req.params == "/" ? req.params : "/profile";
@@ -159,6 +169,11 @@ router.get('/currentUserStatistics', requiresAuth(), (req, res, next) => {
 
         res.status(200).json({totalPrice: totalPrice, numItems: things.length});
     });
+});
+
+// Helper Route - handles redirect for unsupported browsers
+router.get('/unsupported', (req, res) => {
+    res.render("unsupported.html")
 });
 
 // Catch-All / 404 Page

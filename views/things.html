@@ -2,8 +2,9 @@
     <head>
         <title>ThingRepository | Things</title>
         <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/js/simpledatatables/style.css">
         <link rel="stylesheet" href="main.css">
-        <link rel="icon" href="favicon.ico" type="image/icon type">
+        <link rel="icon" href="img/favicon.ico" type="image/icon type">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body class="d-flex flex-column">
@@ -39,7 +40,7 @@
                                     <% if (data[i].imageUrl != "") { %>
                                         <img width="100px" height="100px" src="<%= data[i].imageUrl %>" />
                                     <% } else { %>
-                                        <img width="100px" height="100px" src="default_thing.png" />
+                                        <img width="100px" height="100px" src="img/default_thing.png" />
                                     <% } %>    
                                     </td>
                                     <td><%= data[i].name %></td>
@@ -65,27 +66,14 @@
         <%- include('./partials/itemModal'); %>
 
         <!-- Footer -->
-        <footer>
+        <!-- <footer>
             <%- include('./partials/footer'); %>
-        </footer>
+        </footer> -->
 
         <!-- Scripts  -->
         <%- include('./partials/scripts'); %>
 
-        <script>
-            $('#itemModal').on('hidden.bs.modal', () => {
-                if ($('#itemModal').find('#delete-menu').hasClass("show")) {
-                    $('#itemModal').find('#delete-menu').collapse('toggle');
-                    $('#itemModal').find('#delete-start').collapse('toggle');
-                }
-            }) 
-            $('.close').on('click', (e) => {
-                e.preventDefault();
-                $('.alert').fadeOut();
-            })
-        </script>
-
         <!-- AJAX Requests -->
-        <script src="/js/ajax.js"></script>
+        <script type="module" src="/js/thingsAjax.js"></script>
     </body>
 </html>
